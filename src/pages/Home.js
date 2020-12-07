@@ -3,7 +3,6 @@ import Axios from "axios";
 import { useEffect } from "react";
 
 import WeatherDetails from "../components/WeatherDetails";
-import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
 import Wave from "../components/Wave";
 
