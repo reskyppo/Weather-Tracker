@@ -15,7 +15,8 @@ const Home = () => {
   const n = date.toLocaleTimeString("en-US", { hour12: false });
   const d = date.getDay();
   const day = ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"];
-  console.log(day[d - 1]);
+  console.log(n.slice(0, 2));
+  console.log(details[4].jamCuaca.slice(11, 13));
   useEffect(() => {
     Axios.get("https://ibnux.github.io/BMKG-importer/cuaca/wilayah.json")
       .then((res) => {
@@ -52,6 +53,7 @@ const Home = () => {
         setCuaca(data[0].cuaca);
         setSuhu(data[0].tempC);
         setKodeCuaca(data[0].kodeCuaca);
+        console.log("0");
       }
       if (
         data[1].jamCuaca.slice(11, 13) <= n.slice(0, 2) &&
@@ -60,6 +62,7 @@ const Home = () => {
         setCuaca(data[1].cuaca);
         setSuhu(data[1].tempC);
         setKodeCuaca(data[1].kodeCuaca);
+        console.log("1");
       }
       if (
         data[2].jamCuaca.slice(11, 13) <= n.slice(0, 2) &&
@@ -67,15 +70,13 @@ const Home = () => {
       ) {
         setCuaca(data[2].cuaca);
         setSuhu(data[2].tempC);
+        console.log("2");
         setKodeCuaca(data[2].kodeCuaca);
-      }
-      if (
-        data[3].jamCuaca.slice(11, 13) <= n.slice(0, 2) &&
-        n.slice(0, 2) < data[4].jamCuaca.slice(11, 13)
-      ) {
+      } else {
         setCuaca(data[3].cuaca);
         setSuhu(data[3].tempC);
         setKodeCuaca(data[3].kodeCuaca);
+        console.log("3");
       }
     } catch (err) {
       console.log(err);
