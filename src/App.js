@@ -1,11 +1,10 @@
-import "./index.css";
+import "../src/styles/tailwind.css";
 import Home from "./pages/Home";
 
 function App() {
-  
   return (
     <div className="App">
-      <Home/>
+      <Home />
     </div>
   );
 }
