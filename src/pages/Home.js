@@ -122,7 +122,7 @@ const Home = () => {
       </section>
       <section className="bg-white flex justify-center">
         {loading ? (
-          <div className="flex justify-center">
+          <div className="flex flex-col md:flex-row  justify-center">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -156,7 +156,7 @@ const Home = () => {
             />
           </div>
         ) : (
-          <div className="flex  justify-center">
+          <div className="flex flex-col md:flex-row  justify-center">
             <WeatherCard
               jamCuaca={details[4]?.jamCuaca?.slice(11, 16)}
               kodeCuaca={details[4]?.kodeCuaca}
