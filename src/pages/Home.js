@@ -3,6 +3,8 @@ import Axios from "axios";
 import { useEffect } from "react";
 import Skeleton from "../components/Skeleton";
 import WeatherCard from "../components/WeatherCard";
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
 
 const Home = () => {
   const [datas, setDatas] = useState(() => []);
@@ -12,6 +14,7 @@ const Home = () => {
   const [suhu, setSuhu] = useState();
   const [kodeCuaca, setKodeCuaca] = useState();
   const [selected, setSelected] = useState(501400);
+  const [today, setToday] = useState(true);
   const date = new Date();
   const n = date.toLocaleTimeString("en-US", { hour12: false });
   const d = date.getDay();
@@ -52,7 +55,6 @@ const Home = () => {
         setCuaca(data[0].cuaca);
         setSuhu(data[0].tempC);
         setKodeCuaca(data[0].kodeCuaca);
-        console.log("0");
       }
       if (
         data[1].jamCuaca.slice(11, 13) <= n.slice(0, 2) &&
@@ -61,7 +63,6 @@ const Home = () => {
         setCuaca(data[1].cuaca);
         setSuhu(data[1].tempC);
         setKodeCuaca(data[1].kodeCuaca);
-        console.log("1");
       }
       if (
         data[2].jamCuaca.slice(11, 13) <= n.slice(0, 2) &&
@@ -69,27 +70,28 @@ const Home = () => {
       ) {
         setCuaca(data[2].cuaca);
         setSuhu(data[2].tempC);
-        console.log("2");
         setKodeCuaca(data[2].kodeCuaca);
       } else {
         setCuaca(data[3].cuaca);
         setSuhu(data[3].tempC);
         setKodeCuaca(data[3].kodeCuaca);
-        console.log("3");
       }
     } catch (err) {
       console.log(err);
     }
   };
-
   handleTime();
 
+  const handleToday = () => {
+    setToday(!today);
+  };
+
   return (
-    <div className="bg-gradient-to-br from-blue-400 to-indigo-500 h-screen  ">
+    <div className="bg-gradient-to-br from-blue-400 to-indigo-500 h-screen">
       <section className="flex justify-center ">
         <select
           onClick={handleSelected}
-          className="mx-auto overscroll-auto bg-transparent text-4xl py-4 px-2 outline-none hover:bg-indigo-400 focus:outline-none  text-white"
+          className="mx-auto overscroll-auto bg-transparent text-3xl w-screen md:w-min py-4  outline-none hover:bg-indigo-400 focus:outline-none  text-white"
         >
           {datas?.map?.((data, idx) => (
             <option key={idx} value={data.id}>
@@ -98,27 +100,25 @@ const Home = () => {
           ))}
         </select>
       </section>
-      <section className="flex flex-col items-center justify-center ">
-        <h1 className="text-white text-4xl">{cuaca}</h1>
-        <h1 className="text-white text-6xl py-3">
-          {suhu} <sup>o</sup>
-        </h1>
-        <img
-          src={`https://ibnux.github.io/BMKG-importer/icon/${kodeCuaca}.png`}
-          alt="icon cuaca"
-        />
-        <h1 className="text-white text-4xl">
-          {day[d - 1]}, {n.slice(0, 5)}
-        </h1>
-      </section>
-
+      <Hero
+        cuaca={cuaca}
+        suhu={suhu}
+        kodeCuaca={kodeCuaca}
+        day={day[d - 1]}
+        time={n.slice(0, 5)}
+      />
       <section className="bg-white flex justify-center mt-4 py-4">
-        <div className="text-3xl font-semibold m-2 py-2 border-gray-900 border-b-2">
-          Hari Ini
-        </div>
-        <div className="text-3xl font-semibold m-2 py-2 border-gray-400 border-b-2">
-          Besok
-        </div>
+        {today ? (
+          <>
+            <Navbar title="Hari Ini" clicked onClick={handleToday} />
+            <Navbar title="Besok" onClick={handleToday} />
+          </>
+        ) : (
+          <>
+            <Navbar title="Hari Ini" onClick={handleToday} />
+            <Navbar title="Besok" onClick={handleToday} clicked />
+          </>
+        )}
       </section>
       <section className="bg-white flex justify-center">
         {loading ? (
@@ -128,8 +128,8 @@ const Home = () => {
             <Skeleton />
             <Skeleton />
           </div>
-        ) : (
-          <div className="flex justify-center">
+        ) : today ? (
+          <div className="flex flex-col md:flex-row justify-center">
             <WeatherCard
               jamCuaca={details[0]?.jamCuaca?.slice(11, 16)}
               kodeCuaca={details[0]?.kodeCuaca}
@@ -153,6 +153,33 @@ const Home = () => {
               kodeCuaca={details[3]?.kodeCuaca}
               tempC={details[3]?.tempC}
               cuaca={details[3]?.cuaca}
+            />
+          </div>
+        ) : (
+          <div className="flex  justify-center">
+            <WeatherCard
+              jamCuaca={details[4]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[4]?.kodeCuaca}
+              tempC={details[4]?.tempC}
+              cuaca={details[4]?.cuaca}
+            />
+            <WeatherCard
+              jamCuaca={details[5]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[5]?.kodeCuaca}
+              tempC={details[5]?.tempC}
+              cuaca={details[5]?.cuaca}
+            />
+            <WeatherCard
+              jamCuaca={details[6]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[6]?.kodeCuaca}
+              tempC={details[6]?.tempC}
+              cuaca={details[6]?.cuaca}
+            />
+            <WeatherCard
+              jamCuaca={details[7]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[7]?.kodeCuaca}
+              tempC={details[7]?.tempC}
+              cuaca={details[7]?.cuaca}
             />
           </div>
         )}
