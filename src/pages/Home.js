@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { useEffect } from "react";
 import Skeleton from "../components/Skeleton";
+import WeatherCard from "../components/WeatherCard";
 
 const Home = () => {
   const [datas, setDatas] = useState(() => []);
@@ -15,8 +16,6 @@ const Home = () => {
   const n = date.toLocaleTimeString("en-US", { hour12: false });
   const d = date.getDay();
   const day = ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"];
-  console.log(n.slice(0, 2));
-  console.log(details[4].jamCuaca.slice(11, 13));
   useEffect(() => {
     Axios.get("https://ibnux.github.io/BMKG-importer/cuaca/wilayah.json")
       .then((res) => {
@@ -131,53 +130,30 @@ const Home = () => {
           </div>
         ) : (
           <div className="flex justify-center">
-            <div className="w-1/4 font-semibold flex flex-col justify-center items-center text-2xl px-4 py-2">
-              <p>{details[0]?.jamCuaca?.slice(11, 16)}</p>
-              <img
-                src={`https://ibnux.github.io/BMKG-importer/icon/${details[0]?.kodeCuaca}.png`}
-                alt="icon Cuaca"
-              />
-              <p className="py-4">{details[0]?.cuaca}</p>
-              <p>
-                {details[0]?.tempC}
-                <sup>o</sup>
-              </p>
-            </div>
-            <div className="w-1/4 font-semibold flex flex-col justify-center items-center text-2xl px-4 py-2">
-              <p>{details[1]?.jamCuaca?.slice(11, 16)}</p>
-              <img
-                src={`https://ibnux.github.io/BMKG-importer/icon/${details[1]?.kodeCuaca}.png`}
-                alt="icon Cuaca"
-              />
-              <p className="py-4">{details[1]?.cuaca}</p>
-              <p>
-                {details[1]?.tempC}
-                <sup>o</sup>
-              </p>
-            </div>
-            <div className="w-1/4 font-semibold flex flex-col justify-center items-center text-2xl px-4 py-2">
-              <p>{details[2]?.jamCuaca?.slice(11, 16)}</p>
-              <img
-                src={`https://ibnux.github.io/BMKG-importer/icon/${details[2]?.kodeCuaca}.png`}
-                alt="icon Cuaca"
-              />
-              <p className="py-4">{details[2]?.cuaca}</p>
-              <p>
-                {details[2]?.tempC}
-                <sup>o</sup>
-              </p>
-            </div>
-            <div className="w-1/4 font-semibold flex flex-col justify-center items-center text-2xl px-4 py-2">
-              <p>{details[3]?.jamCuaca?.slice(11, 16)}</p>
-              <img
-                src={`https://ibnux.github.io/BMKG-importer/icon/${details[3]?.kodeCuaca}.png`}
-                alt="icon Cuaca"
-              />
-              <p className="py-4">{details[3]?.cuaca}</p>
-              <p>
-                {details[3]?.tempC} <sup>o</sup>
-              </p>
-            </div>
+            <WeatherCard
+              jamCuaca={details[0]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[0]?.kodeCuaca}
+              tempC={details[0]?.tempC}
+              cuaca={details[0]?.cuaca}
+            />
+            <WeatherCard
+              jamCuaca={details[1]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[1]?.kodeCuaca}
+              tempC={details[1]?.tempC}
+              cuaca={details[1]?.cuaca}
+            />
+            <WeatherCard
+              jamCuaca={details[2]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[2]?.kodeCuaca}
+              tempC={details[2]?.tempC}
+              cuaca={details[2]?.cuaca}
+            />
+            <WeatherCard
+              jamCuaca={details[3]?.jamCuaca?.slice(11, 16)}
+              kodeCuaca={details[3]?.kodeCuaca}
+              tempC={details[3]?.tempC}
+              cuaca={details[3]?.cuaca}
+            />
           </div>
         )}
       </section>
