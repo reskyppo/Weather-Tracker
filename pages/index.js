@@ -6,24 +6,16 @@ function IndexPage({ data }) {
   const [id, setId] = useState(() => 501397);
   const [datas, setDatas] = useState(() => []);
   const [loading, setLoading] = useState(true);
+  const [today, setToday] = useState(true);
   const [cuaca, setCuaca] = useState();
   const [suhu, setSuhu] = useState();
   const [kodeCuaca, setKodeCuaca] = useState();
-  const date = new Date().getDay();
   const time = `${new Date().getHours()}:${new Date().getMinutes()}`;
-  const hari = [
-    "Minggu",
-    "Senin",
-    "Selasa",
-    "Rabu",
-    "Kamis",
-    "Jum'at",
-    "Sabtu",
-  ];
 
   useEffect(() => {
     Axios.get(`https://ibnux.github.io/BMKG-importer/cuaca/${id}.json`)
       .then((res) => {
+        setDatas(res.data);
         if (
           res.data[0].jamCuaca.slice(11, 13) <= time.slice(0, 2) &&
           time.slice(0, 2) < res.data[1].jamCuaca.slice(11, 13)
@@ -54,16 +46,15 @@ function IndexPage({ data }) {
         }
       })
       .catch((err) => console.log(err));
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+    setTimeout(() => setLoading(false), 2500);
   }, [id]);
   const handleId = (e) => setId(e.target.value);
+
   return (
-    <div className="flex flex-col justify-center items-center  py-20">
+    <div className="flex flex-col justify-center items-center  py-52">
       <select
         onClick={handleId}
-        className="form-select w-1/4  bg-gray-50 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-900 
+        className="form-select bg-gray-50 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-900 
             hover:text-gray-900 dark:hover:text-gray-50 text-3xl "
       >
         {data.map((dat) => (
@@ -75,20 +66,181 @@ function IndexPage({ data }) {
       <div className="text-center">
         <div className="flex ml-28 ">
           <section>
-            <div className="text-9xl font-semibold">
-              <div className="">
-                {suhu} <sup>o</sup> C
-              </div>
-            </div>
+            <img
+              src={`https://ibnux.github.io/BMKG-importer/icon/${kodeCuaca}.png`}
+              alt={`Gambar icon cuaca yang sedang ${cuaca}`}
+            />
+            <p>{cuaca}</p>
           </section>
           <section className="px-16">
-            <p className="text-left text-xl">{time}</p>
-            <p className="text-left text-2xl font-semibold py-4">
-              {hari[date]}
+            <p className="text-7xl">
+              {suhu}
+              <sup>o</sup>
             </p>
-            <div className="text-left text-xl">{cuaca}</div>
           </section>
         </div>
+      </div>
+      <div className="py-4 flex w-64  justify-center">
+        <p
+          className="w-1/2 pt-4 mx-2 border-b cursor-pointer"
+          onClick={() => setToday(true)}
+        >
+          Hari Ini
+        </p>
+        <p
+          className="w-1/2 pt-4 mx-2 border-b cursor-pointer"
+          onClick={() => setToday(false)}
+        >
+          Besok
+        </p>
+      </div>
+      <div className="py-4 flex w-1/2 justify-evenly">
+        {loading ? (
+          <div className="mx-4 flex">
+            <Ping />
+            <Ping />
+            <Ping />
+            <Ping />
+          </div>
+        ) : (
+          <div>
+            {today ? (
+              <div className="flex">
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[0].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[0].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[0].tempC}
+                    <sup>o</sup> / {datas[0].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[0].cuaca}</p>
+                </section>
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[1].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[1].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[1].tempC}
+                    <sup>o</sup> / {datas[1].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[1].cuaca}</p>
+                </section>
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[2].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[2].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[2].tempC}
+                    <sup>o</sup> / {datas[2].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[2].cuaca}</p>
+                </section>
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[3].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[3].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[3].tempC}
+                    <sup>o</sup> / {datas[3].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[3].cuaca}</p>
+                </section>
+              </div>
+            ) : (
+              <div className="flex">
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[4].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[4].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[4].tempC}
+                    <sup>o</sup> / {datas[4].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[4].cuaca}</p>
+                </section>
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[5].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[5].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[5].tempC}
+                    <sup>o</sup> / {datas[5].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[5].cuaca}</p>
+                </section>
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[6].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[6].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[6].tempC}
+                    <sup>o</sup> / {datas[6].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[6].cuaca}</p>
+                </section>
+                <section className="mx-6 py-4 px-1">
+                  <p className="text-center">
+                    {datas[7].jamCuaca.slice(11, 16)}
+                  </p>
+                  <img
+                    src={`https://ibnux.github.io/BMKG-importer/icon/${datas[7].kodeCuaca}.png`}
+                    alt={`Ini adalah icon gambar cuaca ${cuaca}`}
+                    className="w-28 my-4"
+                  />
+                  <p className="text-center">
+                    {datas[7].tempC}
+                    <sup>o</sup> / {datas[7].tempF}
+                    <sup>o</sup>
+                  </p>
+                  <p className="text-center">{datas[7].cuaca}</p>
+                </section>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
