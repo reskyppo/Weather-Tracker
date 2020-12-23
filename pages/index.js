@@ -37,16 +37,16 @@ function IndexPage({ data }) {
       bgCard = "bg-gray-500";
       break;
     case "Hujan Sedang":
-      bgColor = "bg-indigo-400";
-      bgCard = "bg-indigo-500";
+      bgColor = "bg-blue-400";
+      bgCard = "bg-blue-500";
       break;
     case "Hujan Ringan":
-      bgColor = "bg-indigo-400";
-      bgCard = "bg-indigo-500";
+      bgColor = "bg-blue-400";
+      bgCard = "bg-blue-500";
       break;
     case "Hujan Petir":
-      bgColor = "bg-indigo-400";
-      bgCard = "bg-indigo-500";
+      bgColor = "bg-blue-400";
+      bgCard = "bg-blue-500";
       break;
   }
 
