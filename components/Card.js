@@ -2,11 +2,11 @@ import React from "react";
 import CardDetails from "../components/CardDetails";
 import Ping from "../components/Ping";
 
-const Card = ({ today, loading, datas }) => {
+const Card = ({ today, loading, datas, bgCard }) => {
   return (
     <div className="py-4 flex w-screen">
       {loading ? (
-        <div className="mx-4 flex">
+        <div className="mx-4 flex justify-center items-center w-screen">
           <Ping />
           <Ping />
           <Ping />
@@ -16,7 +16,7 @@ const Card = ({ today, loading, datas }) => {
         <div>
           {today ? (
             <div className="flex w-screen">
-              <section className="w-1/4 ml-3">
+              <section className={["w-1/4 ml-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[0].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[0].kodeCuaca}
@@ -25,7 +25,7 @@ const Card = ({ today, loading, datas }) => {
                   cuaca={datas[0].cuaca}
                 />
               </section>
-              <section className="w-1/4 ml-3">
+              <section className={["w-1/4 ml-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[1].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[1].kodeCuaca}
@@ -34,7 +34,7 @@ const Card = ({ today, loading, datas }) => {
                   cuaca={datas[1].cuaca}
                 />
               </section>
-              <section className="w-1/4 ml-3">
+              <section className={["w-1/4 ml-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[2].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[2].kodeCuaca}
@@ -43,7 +43,7 @@ const Card = ({ today, loading, datas }) => {
                   cuaca={datas[2].cuaca}
                 />
               </section>
-              <section className="w-1/4 mx-3">
+              <section className={["w-1/4 mx-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[3].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[3].kodeCuaca}
@@ -54,8 +54,8 @@ const Card = ({ today, loading, datas }) => {
               </section>
             </div>
           ) : (
-            <div className="flex">
-              <section className="w-1/4 bg-white bg-opacity-10  ml-3">
+            <div className="flex w-screen ">
+              <section className={["w-1/4 ml-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[4].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[4].kodeCuaca}
@@ -64,7 +64,7 @@ const Card = ({ today, loading, datas }) => {
                   cuaca={datas[4].cuaca}
                 />
               </section>
-              <section className="w-1/4 ml-3">
+              <section className={["w-1/4 ml-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[5].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[5].kodeCuaca}
@@ -73,7 +73,7 @@ const Card = ({ today, loading, datas }) => {
                   cuaca={datas[5].cuaca}
                 />
               </section>
-              <section className="w-1/4 ml-3">
+              <section className={["w-1/4 ml-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[6].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[6].kodeCuaca}
@@ -82,7 +82,7 @@ const Card = ({ today, loading, datas }) => {
                   cuaca={datas[6].cuaca}
                 />
               </section>
-              <section className="w-1/4 mx-3">
+              <section className={["w-1/4 mx-3 rounded-2xl", bgCard].join(" ")}>
                 <CardDetails
                   jamCuaca={datas[7].jamCuaca.slice(11, 16)}
                   kodeCuaca={datas[7].kodeCuaca}

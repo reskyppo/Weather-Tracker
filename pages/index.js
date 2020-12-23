@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import CardDetails from "../components/CardDetails";
@@ -15,8 +16,39 @@ function IndexPage({ data }) {
   const [cuaca, setCuaca] = useState();
   const [suhu, setSuhu] = useState();
   const [kodeCuaca, setKodeCuaca] = useState();
-  const [clicked, setClicked] = useState(true);
   const time = `${new Date().getHours()}:${new Date().getMinutes()}`;
+  let bgColor, bgCard;
+
+  switch (cuaca) {
+    case "Cerah Berawan":
+      bgColor = "bg-yellow-300";
+      bgCard = "bg-yellow-400";
+      break;
+    case "Cerah":
+      bgColor = "bg-yellow-300";
+      bgCard = "bg-yellow-400";
+      break;
+    case "Berawan":
+      bgColor = "bg-gray-400";
+      bgCard = "bg-gray-500";
+      break;
+    case "Berkabut":
+      bgColor = "bg-gray-400";
+      bgCard = "bg-gray-500";
+      break;
+    case "Hujan Sedang":
+      bgColor = "bg-indigo-400";
+      bgCard = "bg-indigo-500";
+      break;
+    case "Hujan Ringan":
+      bgColor = "bg-indigo-400";
+      bgCard = "bg-indigo-500";
+      break;
+    case "Hujan Petir":
+      bgColor = "bg-indigo-400";
+      bgCard = "bg-indigo-500";
+      break;
+  }
 
   useEffect(() => {
     Axios.get(`https://ibnux.github.io/BMKG-importer/cuaca/${id}.json`)
@@ -56,15 +88,40 @@ function IndexPage({ data }) {
   }, [id]);
 
   return (
-    <div className="flex flex-col justify-center items-center py-16 md:py-52">
-      <Select onClick={(e) => setId(e.target.value)} data={data} />
-      <Hero kodeCuaca={kodeCuaca} cuaca={cuaca} suhu={suhu} />
-      <div className="flex">
-        <Nav title="Hari Ini" onClick={() => setToday(true)} />
-        <Nav title="Besok" onClick={() => setToday(true)} />
-      </div>
-      <Card today={today} loading={loading} datas={datas} />
-    </div>
+    <>
+      <Head>
+        <title>Perkiraan Cuaca</title>
+        <meta property="og:title" content="Perkiraan Cuaca" key="title" />
+      </Head>
+
+      <main
+        className={[
+          "flex flex-col text-black justify-center items-center pt-16 min-h-screen md:py-52",
+          bgColor,
+        ].join(" ")}
+      >
+        <Select
+          onClick={(e) => setId(e.target.value)}
+          data={data}
+          bgColor={bgColor}
+        />
+        <Hero kodeCuaca={kodeCuaca} cuaca={cuaca} suhu={suhu} />
+        <div className="flex">
+          {today ? (
+            <>
+              <Nav title="Hari Ini" onClick={() => setToday(true)} clicked />
+              <Nav title="Besok" onClick={() => setToday(false)} />
+            </>
+          ) : (
+            <>
+              <Nav title="Hari Ini" onClick={() => setToday(true)} />
+              <Nav title="Besok" onClick={() => setToday(false)} clicked />
+            </>
+          )}
+        </div>
+        <Card today={today} loading={loading} datas={datas} bgCard={bgCard} />
+      </main>
+    </>
   );
 }
 
