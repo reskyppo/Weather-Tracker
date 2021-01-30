@@ -48,6 +48,11 @@ function IndexPage({ data }) {
       bgColor = "bg-blue-400";
       bgCard = "bg-blue-500";
       break;
+
+    default:
+      bgColor = "bg-gray-200";
+      bgCard = "bg-gray-500";
+      break;
   }
 
   useEffect(() => {
